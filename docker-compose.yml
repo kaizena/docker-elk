@@ -1,10 +1,16 @@
 elasticsearch:
+  log_opt:
+    max-size: "100m"
+  log_driver: "json-file"
   image: elasticsearch:latest
   command: elasticsearch -Des.network.host=0.0.0.0
   ports:
     - "9200:9200"
     - "9300:9300"
 logstash:
+  log_opt:
+    max-size: "100m"
+  log_driver: "json-file"
   image: logstash:latest
   command: logstash -f /etc/logstash/conf.d/logstash.conf
   volumes:
@@ -14,6 +20,9 @@ logstash:
   links:
     - elasticsearch
 kibana:
+  log_opt:
+    max-size: "100m"
+  log_driver: "json-file"
   build: kibana/
   volumes:
     - ./kibana/config/:/opt/kibana/config/
